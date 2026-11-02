@@ -1,0 +1,22 @@
+[ 2026-11-02 11:12:41,633 ] AcmePolicyCopilot - INFO - Found 10 PDF files
+[ 2026-11-02 11:12:41,634 ] AcmePolicyCopilot - INFO - Loading: acceptable-use-policy.pdf
+[ 2026-11-02 11:12:41,636 ] AcmePolicyCopilot - DEBUG - acceptable-use-policy.pdf contains 9 pages
+[ 2026-11-02 11:12:41,675 ] AcmePolicyCopilot - INFO - Loading: benefits-overview.pdf
+[ 2026-11-02 11:12:41,679 ] AcmePolicyCopilot - DEBUG - benefits-overview.pdf contains 8 pages
+[ 2026-11-02 11:12:41,712 ] AcmePolicyCopilot - INFO - Loading: code-of-conduct.pdf
+[ 2026-11-02 11:12:41,715 ] AcmePolicyCopilot - DEBUG - code-of-conduct.pdf contains 8 pages
+[ 2026-11-02 11:12:41,752 ] AcmePolicyCopilot - INFO - Loading: expense-reimbursement-policy.pdf
+[ 2026-11-02 11:12:41,754 ] AcmePolicyCopilot - DEBUG - expense-reimbursement-policy.pdf contains 6 pages
+[ 2026-11-02 11:12:41,777 ] AcmePolicyCopilot - INFO - Loading: holiday-schedule.pdf
+[ 2026-11-02 11:12:41,780 ] AcmePolicyCopilot - DEBUG - holiday-schedule.pdf contains 4 pages
+[ 2026-11-02 11:12:41,801 ] AcmePolicyCopilot - INFO - Loading: information-security-policy.pdf
+[ 2026-11-02 11:12:41,803 ] AcmePolicyCopilot - DEBUG - information-security-policy.pdf contains 8 pages
+[ 2026-11-02 11:12:41,838 ] AcmePolicyCopilot - INFO - Loading: onboarding-guide.pdf
+[ 2026-11-02 11:12:41,841 ] AcmePolicyCopilot - DEBUG - onboarding-guide.pdf contains 7 pages
+[ 2026-11-02 11:12:41,877 ] AcmePolicyCopilot - INFO - Loading: performance-review-policy.pdf
+[ 2026-11-02 11:12:41,879 ] AcmePolicyCopilot - DEBUG - performance-review-policy.pdf contains 7 pages
+[ 2026-11-02 11:12:41,914 ] AcmePolicyCopilot - INFO - Loading: pto-and-leave-policy.pdf
+[ 2026-11-02 11:12:41,916 ] AcmePolicyCopilot - DEBUG - pto-and-leave-policy.pdf contains 6 pages
+[ 2026-11-02 11:12:41,943 ] AcmePolicyCopilot - INFO - Loading: public_counsel_employee_handbook.pdf
+[ 2026-11-02 11:12:41,956 ] AcmePolicyCopilot - DEBUG - public_counsel_employee_handbook.pdf contains 40 pages
+[ 2026-11-02 11:12:43,710 ] AcmePolicyCopilot - INFO - Successfully loaded 103 pages
