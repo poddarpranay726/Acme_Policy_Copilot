@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+logs/
+qdrant_data/
+
+.env
+*.env
+
