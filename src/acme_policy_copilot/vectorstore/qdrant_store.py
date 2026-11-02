@@ -63,3 +63,17 @@ class QdrantStore:
             logger.error("Error while inserting documents into Qdrant")
             raise RAGException(e, sys)
         
+    def search(self, query_embedding, top_k=5):
+        try:
+            results = self.client.query_points(
+                collection_name=COLLECTION_NAME,
+                query=query_embedding.tolist(),
+                limit=top_k,
+                with_payload=True
+            ).points
+
+            return results
+
+        except Exception as e:
+            logger.error("Error while searching Qdrant")
+            raise RAGException(e, sys)
