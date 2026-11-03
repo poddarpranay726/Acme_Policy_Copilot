@@ -1,0 +1,191 @@
+[
+  {
+    "id": "g01",
+    "input": "What are the password requirements at Acme Corp?",
+    "expected_output": "Passwords must be at least 14 characters, include at least three of four character categories (uppercase, lowercase, numbers, special characters), be changed every 90 days, and cannot reuse any of the last 12 passwords. Accounts lock after 5 consecutive failed login attempts.",
+    "context": [
+      "Minimum length: 14 characters. Complexity: Must include at least three of the following four categories. Expiration: Passwords must be changed every 90 days. History: Cannot reuse any of the last 12 passwords. Lockout: Accounts are locked after 5 consecutive failed login attempts; unlock requires contacting IT Support."
+    ],
+    "source_file": "ACME-IT-001",
+    "additional_metadata": {
+      "policy_title": "Information Security Policy",
+      "section": "3.1",
+      "department": "IT",
+      "question_type": "factual_lookup",
+      "difficulty": "easy",
+      "chunks_needed": 1,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g02",
+    "input": "My laptop was stolen. Who do I contact and how fast will it be wiped?",
+    "expected_output": "Report it immediately to IT Security at security@acmecorp.com or extension x4700, or via the 24/7 emergency security hotline (555) 867-5309. IT Security will start a remote wipe and password reset within 1 hour of notification.",
+    "context": [
+      "Report any lost or stolen company or personal device containing company data immediately to: IT Security: security@acmecorp.com or extension x4700. Available 24/7 via the emergency security hotline: (555) 867-5309. IT Security will initiate a remote wipe and password reset within 1 hour of notification."
+    ],
+    "source_file": "ACME-IT-001",
+    "additional_metadata": {
+      "policy_title": "Information Security Policy",
+      "section": "4.3",
+      "department": "IT",
+      "question_type": "procedural",
+      "difficulty": "easy",
+      "chunks_needed": 1,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g03",
+    "input": "What are the premium, deductible and out-of-pocket maximum for the PPO Premium medical plan for an individual?",
+    "expected_output": "PPO Premium has a $125 monthly employee premium, 90/10 coverage after deductible, a $500 individual deductible, and a $3,000 individual out-of-pocket maximum.",
+    "context": [
+      "PPO Premium | $125 | 90/10 after deductible | $500 individual / $1,250 family | $3,000 / $6,000"
+    ],
+    "source_file": "ACME-HR-007",
+    "additional_metadata": {
+      "policy_title": "Employee Benefits Overview",
+      "section": "2.1",
+      "department": "HR",
+      "question_type": "numeric",
+      "difficulty": "medium",
+      "chunks_needed": 1,
+      "answer_in_table": true
+    }
+  },
+  {
+    "id": "g04",
+    "input": "Can I claim my gym membership as an expense?",
+    "expected_output": "Not as a regular business expense, since gym memberships are non-reimbursable under the Expense Reimbursement Policy. However, the wellness program separately reimburses up to $50/month ($600/year) toward gym memberships or fitness classes, with proof of membership and a receipt submitted via the Acme Expense Portal.",
+    "context": [
+      "Non-reimbursable expenses: Gym memberships",
+      "Acme Corp reimburses up to $50/month ($600/year) toward gym memberships or fitness class fees. To receive reimbursement: Submit proof of membership and a receipt via the Acme Expense Portal"
+    ],
+    "source_file": "ACME-FIN-001 + ACME-HR-007",
+    "additional_metadata": {
+      "policy_title": "Expense Reimbursement Policy; Employee Benefits Overview",
+      "section": "FIN-001 §11; HR-007 §10.1",
+      "department": "FIN/HR",
+      "question_type": "cross_doc",
+      "difficulty": "hard",
+      "chunks_needed": 2,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g05",
+    "input": "I've been at Acme for 4 years. How much PTO do I get per year and how fast does it accrue?",
+    "expected_output": "With 3-5 years of tenure you get 20 days (160 hours) per year, accruing 6.67 hours per semi-monthly pay period.",
+    "context": [
+      "0-2 years 15 days (120 hours) 5.0 hours; 3-5 years 20 days (160 hours) 6.67 hours; 6-10 years 25 days (200 hours) 8.33 hours; 11+ years 30 days (240 hours) 10.0 hours"
+    ],
+    "source_file": "ACME-HR-001",
+    "additional_metadata": {
+      "policy_title": "Paid Time Off & Leave Policy",
+      "section": "2.1",
+      "department": "HR",
+      "question_type": "numeric",
+      "difficulty": "medium",
+      "chunks_needed": 1,
+      "answer_in_table": true
+    }
+  },
+  {
+    "id": "g06",
+    "input": "How many days of bereavement leave do I get when a close family member dies?",
+    "expected_output": "Up to 5 consecutive business days of paid bereavement leave for an immediate family member (spouse, domestic partner, child, parent, sibling, grandparent, grandchild or parent-in-law), and up to 3 consecutive business days for extended family such as aunts, uncles or cousins.",
+    "context": [
+      "Employees are granted up to 5 consecutive business days of paid bereavement leave following the death of an immediate family member. Immediate family is defined as: spouse, domestic partner, child (including stepchild), parent (including stepparent), sibling, grandparent, grandchild, or parent-in-law.",
+      "Employees are granted up to 3 consecutive business days of paid bereavement leave following the death of an extended family member: aunt, uncle, niece, nephew, cousin, brother-in-law, or sister-in-law."
+    ],
+    "source_file": "ACME-HR-001",
+    "additional_metadata": {
+      "policy_title": "Paid Time Off & Leave Policy",
+      "section": "6.1, 6.2",
+      "department": "HR",
+      "question_type": "distractor_conflict",
+      "difficulty": "hard",
+      "chunks_needed": 2,
+      "answer_in_table": false,
+      "distractor_sources": [
+        "PC-SAMPLE-HANDBOOK (says 4 days) - retriever should NOT answer from it"
+      ]
+    }
+  },
+  {
+    "id": "g07",
+    "input": "What does it take to get promoted?",
+    "expected_output": "Promotion requires sustained performance (at least one annual review cycle at the current level with a rating of 4 or 5), readiness to perform at the next level, a business need, and manager sponsorship via calibration. Promotions take effect April 1, with a typical 10-15% salary increase on top of any merit increase.",
+    "context": [
+      "Sustained performance: minimum one annual review cycle at the current level with a rating of 4 or 5; Readiness for next level; Business need; Manager recommendation",
+      "Approved promotions take effect on April 1 alongside merit increases.",
+      "typical promotion increase of 10-15% of base salary (in addition to any merit increase)"
+    ],
+    "source_file": "ACME-HR-009",
+    "additional_metadata": {
+      "policy_title": "Performance Review Policy",
+      "section": "6.1-6.3",
+      "department": "HR",
+      "question_type": "multi_hop",
+      "difficulty": "hard",
+      "chunks_needed": 3,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g08",
+    "input": "Can I paste a customer contract into free ChatGPT to summarize it?",
+    "expected_output": "No. Free-tier ChatGPT is an unapproved AI tool, and Confidential or Restricted data must never be entered into unapproved AI tools. Customer data is classified Confidential at minimum (PII is Restricted). Use an approved tool such as Google Gemini via Workspace or the internal Acme AI Platform assistants.",
+    "context": [
+      "Never input Confidential or Restricted data into AI tools that are not on the approved list",
+      "Unapproved tools include but are not limited to: free-tier ChatGPT, Claude, and other public AI services that may retain input data.",
+      "Customer data is classified as Confidential at minimum, with personally identifiable information (PII) classified as Restricted."
+    ],
+    "source_file": "ACME-IT-002 + ACME-IT-001",
+    "additional_metadata": {
+      "policy_title": "Acceptable Use Policy; Information Security Policy",
+      "section": "IT-002 §7.4; IT-001 §8.3",
+      "department": "IT",
+      "question_type": "cross_doc",
+      "difficulty": "hard",
+      "chunks_needed": 3,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g09",
+    "input": "If I resign, how much of my unused PTO and sick leave will be paid out?",
+    "expected_output": "Accrued but unused PTO is paid out up to the maximum carryover balance of 5 days, with the final pay period prorated by days worked. Unused sick leave is not paid out.",
+    "context": [
+      "Upon voluntary or involuntary separation from Acme Corp, employees will be paid out for any accrued but unused PTO, up to the maximum carryover balance of 5 days. PTO accrued in the final pay period will be prorated based on days worked.",
+      "Unused sick leave does not carry over to the following year and is not paid out upon separation from the company."
+    ],
+    "source_file": "ACME-HR-001",
+    "additional_metadata": {
+      "policy_title": "Paid Time Off & Leave Policy",
+      "section": "2.4, 3.4",
+      "department": "HR",
+      "question_type": "multi_hop",
+      "difficulty": "medium",
+      "chunks_needed": 2,
+      "answer_in_table": false
+    }
+  },
+  {
+    "id": "g10",
+    "input": "How many days per week can I work from home as a hybrid employee?",
+    "expected_output": "The provided documents do not specify this. Hybrid and remote arrangements are governed by the Remote Work Policy (ACME-HR-002), which is not in the available documents.",
+    "context": [],
+    "source_file": "NONE",
+    "additional_metadata": {
+      "policy_title": "n/a",
+      "section": "n/a",
+      "department": "HR",
+      "question_type": "unanswerable",
+      "difficulty": "hard",
+      "chunks_needed": 0,
+      "answer_in_table": false,
+      "note": "References ACME-HR-002 exist in HR-008/HR-009/FIN-001 but the policy itself is not in the corpus. Good hallucination / abstention test."
+    }
+  }
+]
