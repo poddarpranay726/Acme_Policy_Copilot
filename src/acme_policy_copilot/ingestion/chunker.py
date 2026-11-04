@@ -14,7 +14,12 @@ def create_chunks(documents):
         for document in documents:
             split_texts = text_splitter.split_text(document["text"])
 
-            for chunk_id, text in enumerate(split_texts):
+            for local_chunk_id, text in enumerate(split_texts):
+                source = document["metadata"]["source"]
+                page = document["metadata"]["page"]
+
+                chunk_id = f"{source}_{page}_{local_chunk_id}"
+
                 chunks.append({
                     "text": text,
                     "metadata": {
@@ -35,7 +40,9 @@ if __name__ == "__main__":
 
     documents = load_pdfs()
     chunks = create_chunks(documents)
+    chunk_ids = [chunk["metadata"]["chunk_id"] for chunk in chunks]
 
+    print(chunk_ids)
     print(f"Total chunks: {len(chunks)}")
     print("\nFirst chunk:")
     print(chunks[0])

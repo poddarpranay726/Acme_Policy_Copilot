@@ -3,6 +3,7 @@ from qdrant_client.models import Distance, VectorParams, PointStruct
 from acme_policy_copilot.logger import logger
 from acme_policy_copilot.exception import RAGException
 import sys
+import uuid
 
 COLLECTION_NAME = "acme_policy_chunks"
 VECTOR_SIZE = 384
@@ -42,9 +43,15 @@ class QdrantStore:
         try:
             points = []
             for idx, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+                point_id = str(
+                    uuid.uuid5(
+                        uuid.NAMESPACE_DNS,
+                        chunk["metadata"]["chunk_id"]
+                    )
+                )
                 points.append(
                     PointStruct(
-                        id=idx,
+                        id=point_id,
                         vector=embedding.tolist(),
                         payload={
                             "text": chunk["text"],
@@ -72,8 +79,20 @@ class QdrantStore:
                 with_payload=True
             ).points
 
-            return results
-
+            formatted_results = []
+            for result in results:
+                payload = result.payload
+                formatted_results.append({
+                    "score": float(result.score),
+                    "text": payload["text"],
+                    "metadata": {
+                        "source": payload["source"],
+                        "page": payload["page"],
+                        "chunk_id": payload["chunk_id"]
+                    }
+                })
+            return formatted_results
+        
         except Exception as e:
             logger.error("Error while searching Qdrant")
             raise RAGException(e, sys)

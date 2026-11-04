@@ -32,7 +32,7 @@ class Retriever:
 
 if __name__ == "__main__":
     retriever = Retriever()
-    query = "How can I claim travel expenses?"
+    query = "What are the password requirements at Acme Corp?"
     results = retriever.retrieve(
         query,
         top_k=5
@@ -41,5 +41,5 @@ if __name__ == "__main__":
     print("\n===== SEARCH RESULTS =====")
     for i, result in enumerate(results, start=1):
         print(f"\nResult {i}")
-        print("Score:", result.score)
-        print("Payload:", result.payload)
+        print("Score:", result["score"])
+        print("text:", result["text"])
