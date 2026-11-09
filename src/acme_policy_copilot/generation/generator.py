@@ -69,7 +69,7 @@ class ResponseGenerator:
             logger.exception("Response generator initialization failed")
             raise RAGException(e, sys)
 
-    def generate_response(self, query, documents):
+    def generate_stream(self, query, documents):
 
         try:
 
@@ -82,18 +82,24 @@ class ResponseGenerator:
                 ]
             )
 
-            answer = self.chain.invoke({
+            for chunk in self.chain.stream({
                 "query": query,
-                "context": context
-            })
+                "context": context,
+            }):
 
-            logger.info("Response generated successfully")
+                if chunk:
+                    yield chunk
 
-            return answer
+            logger.info(
+                "Streaming response generated successfully"
+            )
 
         except Exception as e:
-            logger.exception("Response generation failed")
+            logger.exception(
+                "Streaming response generation failed"
+            )
             raise RAGException(e, sys)
+
 
 if __name__ == "__main__":
     reranker = Reranker()

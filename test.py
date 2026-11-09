@@ -31,23 +31,25 @@
 # print(judge)
 
 
-from openai import OpenAI
-import os
-from dotenv import load_dotenv
+# from openai import OpenAI
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv("NVIDIA_API_KEY"),
-    base_url="https://integrate.api.nvidia.com/v1"
-)
+# client = OpenAI(
+#     api_key=os.getenv("NVIDIA_API_KEY"),
+#     base_url="https://integrate.api.nvidia.com/v1"
+# )
 
-response = client.chat.completions.create(
-    model="mistralai/mistral-large-4-1t-a52b",
-    messages=[
-        {"role": "user", "content": "Say hello"}
-    ],
-    temperature=0
-)
+# response = client.chat.completions.create(
+#     model="mistralai/mistral-large-4-1t-a52b",
+#     messages=[
+#         {"role": "user", "content": "Say hello"}
+#     ],
+#     temperature=0
+# )
 
-print(response.choices[0].message.content)
+# print(response.choices[0].message.content)
+
+

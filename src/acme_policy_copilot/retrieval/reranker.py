@@ -1,7 +1,6 @@
 from sentence_transformers import CrossEncoder
-from .hybrid_retriever import HybridRetriever
 from ..exception import RAGException
-# from query_rewriter import QueryRewriter
+from .query_rewriter import QueryRewriter
 import sys
 import json
 
@@ -10,27 +9,21 @@ MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 class Reranker:
     def __init__(self):
         self.model = CrossEncoder(MODEL_NAME)
-        self.hybrid_retriever = HybridRetriever()
-        # self.query_rewriter = QueryRewriter()
+        self.query_rewriter = QueryRewriter()
 
-    def rerank(self, query, top_k=5):
+    def rerank(self, query,documents, top_k=5):
         try :
-            # rewrited_query = self.query_rewriter(query)
-            candidates = self.hybrid_retriever.retrieve(
-                query,
-                top_k=20,
-                candidate_k=20
-            )
+            rewrited_query = self.query_rewriter.rewrite(query)
             # print(f"Candidates: {json.dumps(candidates, indent=4)}")
             pairs = [
-                (query, document["text"])
-                for document in candidates
+                (rewrited_query, document["text"])
+                for document in documents
             ]
             scores = self.model.predict(pairs)
             # print(f"Data Type of scores: {type(scores)}")
             # print(f"Scores: {scores}")
             reranked = []
-            for document, score in zip(candidates, scores):
+            for document, score in zip(documents, scores):
                 result = document.copy()
                 result["rerank_score"] = float(score)
                 reranked.append(result)
