@@ -1,0 +1,67 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: acme-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  backend:
+    build: .
+    container_name: acme-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      DATABASE_URL: postgresql+psycopg://acme_user:acme_password@postgres:5432/acme_copilot
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+    volumes:
+       - ./data:/app/data
+
+  postgres:
+    image: postgres:17
+    container_name: acme-postgres
+    environment:
+      POSTGRES_USER: acme_user
+      POSTGRES_PASSWORD: acme_password
+      POSTGRES_DB: acme_copilot
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: acme-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: acme-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    
+volumes:
+  qdrant_storage:
+  postgres_data:
+  redis_data:

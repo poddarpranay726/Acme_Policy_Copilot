@@ -7,6 +7,8 @@ from ..retrieval.query_rewriter import QueryRewriter
 from ..retrieval.hybrid_retriever import HybridRetriever
 from ..retrieval.reranker import Reranker
 from ..generation.generator import ResponseGenerator
+from langfuse import observe
+from langfuse import get_client
 
 class RAGPipeline:
 
@@ -28,7 +30,8 @@ class RAGPipeline:
         except Exception as e:
             logger.exception("RAG pipeline initialization failed")
             raise RAGException(e, sys)
-
+        
+    @observe(name="rag-pipeline", capture_input=False)
     def run(
         self,
         query: str,
@@ -37,6 +40,7 @@ class RAGPipeline:
 
         try:
             # 1. Retrieve previous conversation history
+            get_client().update_current_span(input={"query": query})
             chat_history = self.conversation_manager.get_history(
                 conversation_id
             )
@@ -93,9 +97,11 @@ class RAGPipeline:
             )
 
             # 7. Generate answer
-            answer = self.response_generator.generate_stream(
-                query=query,
-                documents=ranked_documents,
+            answer = "".join(
+                self.response_generator.generate_stream(
+                    query=query,
+                    documents=ranked_documents,
+                )
             )
 
             # 8. Save assistant response

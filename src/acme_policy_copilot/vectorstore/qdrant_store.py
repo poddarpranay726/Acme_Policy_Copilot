@@ -1,9 +1,10 @@
+import os
+import sys
+import uuid
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from acme_policy_copilot.logger import logger
 from acme_policy_copilot.exception import RAGException
-import sys
-import uuid
 
 COLLECTION_NAME = "acme_policy_chunks"
 VECTOR_SIZE = 384
@@ -12,15 +13,25 @@ class QdrantStore:
     def __init__(self):
         try:
             logger.info("Initializing Qdrant")
-            self.client = QdrantClient(path="qdrant_data")
+
+            qdrant_url = os.getenv("QDRANT_URL")
+
+            if qdrant_url:
+                self.client = QdrantClient(url=qdrant_url)
+                logger.info(f"Connected to Qdrant server: {qdrant_url}")
+            else:
+                self.client = QdrantClient(path="qdrant_data")
+                logger.info("Connected to local Qdrant storage")
+
             self._create_collection()
 
         except Exception as e:
-            logger.error("Error while initializing Qdrant")
+            logger.exception("Error while initializing Qdrant")
             raise RAGException(e, sys)
 
     def _create_collection(self):
         collections = self.client.get_collections().collections
+
         collection_exists = any(
             collection.name == COLLECTION_NAME
             for collection in collections
@@ -42,13 +53,15 @@ class QdrantStore:
     def add_documents(self, chunks, embeddings):
         try:
             points = []
-            for idx, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+
+            for chunk, embedding in zip(chunks, embeddings):
                 point_id = str(
                     uuid.uuid5(
                         uuid.NAMESPACE_DNS,
                         chunk["metadata"]["chunk_id"]
                     )
                 )
+
                 points.append(
                     PointStruct(
                         id=point_id,
@@ -59,6 +72,7 @@ class QdrantStore:
                         }
                     )
                 )
+
             self.client.upsert(
                 collection_name=COLLECTION_NAME,
                 points=points
@@ -67,9 +81,9 @@ class QdrantStore:
             logger.info(f"Inserted {len(points)} chunks into Qdrant")
 
         except Exception as e:
-            logger.error("Error while inserting documents into Qdrant")
+            logger.exception("Error while inserting documents into Qdrant")
             raise RAGException(e, sys)
-        
+
     def search(self, query_embedding, top_k=5):
         try:
             results = self.client.query_points(
@@ -80,8 +94,10 @@ class QdrantStore:
             ).points
 
             formatted_results = []
+
             for result in results:
                 payload = result.payload
+
                 formatted_results.append({
                     "score": float(result.score),
                     "text": payload["text"],
@@ -91,8 +107,9 @@ class QdrantStore:
                         "chunk_id": payload["chunk_id"]
                     }
                 })
+
             return formatted_results
-        
+
         except Exception as e:
-            logger.error("Error while searching Qdrant")
+            logger.exception("Error while searching Qdrant")
             raise RAGException(e, sys)

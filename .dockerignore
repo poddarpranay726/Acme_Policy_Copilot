@@ -1,0 +1,15 @@
+.env
+.git
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+qdrant_data
+qdrant_export.json
+data
+evals
+eval_datasets
+frontend
+node_modules
